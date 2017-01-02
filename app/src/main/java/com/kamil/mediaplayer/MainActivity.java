@@ -1,14 +1,24 @@
 package com.kamil.mediaplayer;
 
+import android.content.ContentUris;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Logger;
+
 import android.net.Uri;
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.ListView;
@@ -31,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
     private boolean musicBound=false;
     private MusicController controller;
     private boolean paused=false, playbackPaused=false;
+
 
 
     @Override
@@ -191,15 +202,23 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
             do {
                 long thisId = musicCursor.getLong(idColumn);
 
+
+
+
                 String thisTitle = musicCursor.getString(titleColumn);
                 String thisArtist = musicCursor.getString(artistColumn);
+                long thisAlbumId = musicCursor.getLong(albumID);
 
-                songList.add(new Song(thisId ,thisTitle, thisArtist));
+                String cover = SongAdapter.getCoverArtPath(thisAlbumId,this);
+
+
+                songList.add(new Song(thisId ,thisTitle, thisArtist, cover));
             }
             while (musicCursor.moveToNext());
         }
 
     }
+
 
     @Override
     protected void onPause(){

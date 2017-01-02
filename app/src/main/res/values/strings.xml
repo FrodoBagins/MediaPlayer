@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MediaPlayer</string>
     <string name="desc">1</string>
+    <string name="all_song">Lista utworów</string>
 </resources>

@@ -10,19 +10,21 @@ public class Song {
 
     private String title;
     private String artist;
+    private String albumid;
 
 
 
-    public Song(long songID, String songTitle, String songArtist) {
+    public Song(long songID, String songTitle, String songArtist, String songAlbumid) {
         id=songID;
         title=songTitle;
         artist=songArtist;
+        albumid=songAlbumid;
     }
 
     public long getID(){return id;}
     public String getTitle(){return title;}
     public String getArtist(){return artist;}
-
+    public String getAlbumid(){return albumid;}
 
 
 }

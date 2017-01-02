@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:onClick="songPicked"
     android:orientation="vertical"
-    android:padding="5dp"
+
     android:weightSum="1">
 
     <LinearLayout
@@ -15,7 +15,7 @@
 
     <ImageView
         android:layout_height="50dp"
-        app:srcCompat="@drawable/end"
+        app:srcCompat="@drawable/note"
         android:id="@+id/imageView"
         android:contentDescription="@string/desc"
         android:adjustViewBounds="true"
@@ -26,22 +26,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="5dp">
     <TextView
     android:id="@+id/song_title"
     android:layout_width="316dp"
     android:layout_height="wrap_content"
     android:textColor="#000000"
-    android:textSize="20sp"
+    android:textSize="16sp"
     android:textStyle="bold"
     android:gravity="start"
- />
+        android:layout_marginTop="10dp" />
 
     <TextView
        android:id="@+id/song_artist"
       android:layout_height="wrap_content"
-     android:textColor="#000000"
-       android:textSize="18sp"
+     android:textColor="#8a07d6"
+       android:textSize="12sp"
         android:layout_width="316dp"
           android:gravity="start"
  />
