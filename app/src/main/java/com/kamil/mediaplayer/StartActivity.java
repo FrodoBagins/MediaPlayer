@@ -20,5 +20,11 @@ public class StartActivity extends AppCompatActivity {
 
     }
 
+    public void viewLibrary(View view) {
+        Intent intent = new Intent(this, MusicLibrary.class);
+        startActivity(intent);
+    }
+
+
 
 }

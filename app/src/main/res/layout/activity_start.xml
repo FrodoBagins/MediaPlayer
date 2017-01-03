@@ -14,11 +14,22 @@
         android:text="@string/all_song"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="69dp"
+        android:layout_marginTop="71dp"
         android:id="@+id/all_song_view"
         android:onClick="viewAllSong"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        style="@style/Widget.AppCompat.Button.Borderless" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/library"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/library"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:onClick="viewLibrary"
+        android:layout_below="@+id/all_song_view"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
