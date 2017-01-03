@@ -3,7 +3,6 @@ package com.kamil.mediaplayer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -14,7 +13,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
  */
 
 public class DbAdapter {
-    private static final String DEBUG_TAG = "SqLiteManager";
+    private static final String DEBUG_TAG = "SqLiteTodoManager";
 
     private SQLiteDatabase db;
     private Context context;
@@ -22,11 +21,11 @@ public class DbAdapter {
 
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "database.db";
-    private static final String DB_TODO_TABLE = "song";
+    private static final String DB_TODO_TABLE = "todo";
 
     public static final String KEY_ID = "_id";
-    public static final String ID_OPTIONS = "INTEGER PRIAMRY KEY AUTOINCREMENT";
-    public static int ID_COLUMN = 0;
+    public static final String ID_OPTIONS = "INTEGER PRIMARY KEY AUTOINCREMENT";
+    public static final int ID_COLUMN = 0;
 
     public static final String KEY_TITLE = "title";
     public static final String TITLE_OPTIONS = "TEXT NOT NULL";
@@ -48,6 +47,10 @@ public class DbAdapter {
     public static final String LENGTH_OPTIONS = "INTEGER DEFAULT 0";
     public static final int LENGTH_COLUMN = 5;
 
+    public static final String KEY_SONGID = "songid";
+    public static final String SONGID_OPTIONS = "INTEGER DEFAULT 0";
+    public static final int SONGID_COLUMN = 6;
+
     private static final String DB_CREATE_TODO_TABLE =
             "CREATE TABLE " + DB_TODO_TABLE + "( " +
                     KEY_ID + " " + ID_OPTIONS + ", " +
@@ -55,7 +58,8 @@ public class DbAdapter {
                     KEY_AUTHOR + " " + AUTHOR_OPTIONS + ", " +
                     KEY_ALBUM + " " + ALBUM_OPTIONS + ", " +
                     KEY_ALBUMPATH + " " + ALBUMPATH_OPTIONS + ", " +
-                    KEY_LENGTH + " " + LENGTH_OPTIONS +
+                    KEY_LENGTH + " " + LENGTH_OPTIONS + ", " +
+                    KEY_SONGID + " " + SONGID_OPTIONS +
                     ");";
 
     private static final String DROP_TODO_TABLE =
@@ -79,13 +83,14 @@ public class DbAdapter {
         dbHelper.close();
     }
 
-    public long insertSong(String title, String author, String album, String albumpath, long length) {
+    public long insertSong(String title, String author, String album, String albumpath, long length, long songid) {
         ContentValues newSongValues = new ContentValues();
         newSongValues.put(KEY_TITLE, title);
         newSongValues.put(KEY_AUTHOR, author);
         newSongValues.put(KEY_ALBUM, album);
         newSongValues.put(KEY_ALBUMPATH, albumpath);
         newSongValues.put(KEY_LENGTH, length);
+        newSongValues.put(KEY_SONGID, songid);
         return db.insert(DB_TODO_TABLE, null, newSongValues);
     }
 
@@ -96,10 +101,11 @@ public class DbAdapter {
         String album = song.getAlbum();
         String albumpath = song.getAlbumpath();
         long length = song.getLength();
-        return updateSong(id, title, author, album, albumpath, length);
+        long songid = song.getSongid();
+        return updateSong(id, title, author, album, albumpath, length, songid);
     }
 
-    public boolean updateSong(long id, String title, String author, String album, String albumpath, long length) {
+    public boolean updateSong(long id, String title, String author, String album, String albumpath, long length, long songid) {
         String where = KEY_ID + "=" + id;
         ContentValues updateSongValues = new ContentValues();
         updateSongValues.put(KEY_TITLE, title);
@@ -107,6 +113,7 @@ public class DbAdapter {
         updateSongValues.put(KEY_ALBUM, title);
         updateSongValues.put(KEY_ALBUMPATH, title);
         updateSongValues.put(KEY_LENGTH, title);
+        updateSongValues.put(KEY_SONGID, songid);
         return db.update(DB_TODO_TABLE, updateSongValues, where, null) > 0;
     }
 
@@ -116,12 +123,12 @@ public class DbAdapter {
     }
 
     public Cursor getAllSongs(){
-        String [] columns = {KEY_ID, KEY_TITLE, KEY_AUTHOR, KEY_ALBUM, KEY_ALBUMPATH, KEY_LENGTH};
+        String [] columns = {KEY_ID, KEY_TITLE, KEY_AUTHOR, KEY_ALBUM, KEY_ALBUMPATH, KEY_LENGTH, KEY_SONGID};
         return db.query(DB_TODO_TABLE, columns, null, null, null, null, null);
     }
 
     public SongModel getSong(long id) {
-        String[] columns = {KEY_ID, KEY_TITLE, KEY_AUTHOR, KEY_ALBUM, KEY_ALBUMPATH, KEY_LENGTH};
+        String[] columns = {KEY_ID, KEY_TITLE, KEY_AUTHOR, KEY_ALBUM, KEY_ALBUMPATH, KEY_LENGTH, KEY_SONGID};
         String where = KEY_ID + "=" + id;
         Cursor cursor = db.query(DB_TODO_TABLE, columns, where, null, null, null, null);
         SongModel song = null;
@@ -129,9 +136,10 @@ public class DbAdapter {
             String title = cursor.getString(TITLE_COLUMN);
             String author = cursor.getString(AUTHOR_COLUMN);
             String album = cursor.getString(ALBUM_COLUMN);
-            String albumpath = cursor.getString(ALBUM_COLUMN);
+            String albumpath = cursor.getString(ALBUMPATH_COLUMN);
             long length = cursor.getLong(LENGTH_COLUMN);
-            song = new SongModel(id, title, author, album, albumpath, length);
+            long songid = cursor.getLong(SONGID_COLUMN);
+            song = new SongModel(id, title, author, album, albumpath, length, songid);
         }
         return song;
     }

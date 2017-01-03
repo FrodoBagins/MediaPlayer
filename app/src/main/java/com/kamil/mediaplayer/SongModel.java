@@ -5,7 +5,6 @@ package com.kamil.mediaplayer;
  */
 
 
-
 public class SongModel {
 
     private long id;
@@ -14,14 +13,16 @@ public class SongModel {
     private String album;
     private String albumpath;
     private long length;
+    private long songid;
 
-    public SongModel(long id, String title, String author, String album, String albumpath, long length) {
+    public SongModel(long id, String title, String author, String album, String albumpath, long length, long songid) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.album = album;
         this.albumpath = albumpath;
         this.length = length;
+        this.songid = songid;
     }
 
     public long getId() {
@@ -48,6 +49,10 @@ public class SongModel {
         return length;
     }
 
+    public long getSongid() {
+        return songid;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -70,5 +75,9 @@ public class SongModel {
 
     public void setLength(long length) {
         this.length = length;
+    }
+
+    public void setSongid(long songid) {
+        this.songid = songid;
     }
 }

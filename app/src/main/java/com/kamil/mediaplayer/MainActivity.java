@@ -34,6 +34,12 @@ import android.widget.MediaController.MediaPlayerControl;
 
 public class MainActivity extends AppCompatActivity implements MediaPlayerControl{
 
+
+    private DbAdapter todoDbAdapter;
+    private Cursor todoCursor;
+    private SongAdapter listAdapter;
+    private ArrayList<Song> tasks;
+
     private ArrayList<Song> songList;
     private ListView songView;
     private MusicService musicSrv;
@@ -49,23 +55,27 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         songView = (ListView)findViewById(R.id.song_list);
         songList = new ArrayList<Song>();
 
+
         getSongList();
 
-        Collections.sort(songList, new Comparator<Song>(){
+        Collections.sort(tasks, new Comparator<Song>(){
             public int compare(Song a, Song b){
                 return a.getTitle().compareTo(b.getTitle());
-            }
+           }
         });
 
-        SongAdapter songAdt = new SongAdapter(this, songList);
+        SongAdapter songAdt = new SongAdapter(this, tasks);
         songView.setAdapter(songAdt);
-
         setController();
 
     }
+
+    
+
 
 
     @Override
@@ -160,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
             //get service
             musicSrv = binder.getService();
             //pass list
-            musicSrv.setList(songList);
+            musicSrv.setList(tasks);
             musicBound = true;
         }
 
@@ -183,42 +193,56 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
 
     public void getSongList() {
 
-        ContentResolver musicResolver = getContentResolver();
-        Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
-
-
-        if(musicCursor!=null && musicCursor.moveToFirst()){
-            //get columns
-            int titleColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.TITLE);
-            int idColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media._ID);
-            int artistColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.ARTIST);
-            int albumID = musicCursor.getColumnIndex
-                    (MediaStore.Audio.Media.ALBUM_ID);
-            //add songs to list
-            do {
-                long thisId = musicCursor.getLong(idColumn);
-
-
-
-
-                String thisTitle = musicCursor.getString(titleColumn);
-                String thisArtist = musicCursor.getString(artistColumn);
-                long thisAlbumId = musicCursor.getLong(albumID);
-
-                String cover = SongAdapter.getCoverArtPath(thisAlbumId,this);
-
-
-                songList.add(new Song(thisId ,thisTitle, thisArtist, cover));
-            }
-            while (musicCursor.moveToNext());
-        }
+        initListView();
 
     }
 
+
+    private void initListView() {
+        fillListViewData();
+        //initListViewONItemClick();
+
+    }
+
+
+    private void fillListViewData() {
+        todoDbAdapter = new DbAdapter(getApplicationContext());
+        todoDbAdapter.open();
+        getAllSongs();
+        listAdapter = new SongAdapter(this, tasks);
+        songView.setAdapter(listAdapter);
+
+    }
+
+    private void getAllSongs() {
+
+        tasks = new ArrayList<Song>();
+        todoCursor = getAllEntriesFromDb();
+        updateSongList();
+
+    }
+
+    private Cursor getAllEntriesFromDb() {
+        todoCursor = todoDbAdapter.getAllSongs();
+        if(todoCursor != null) {
+            startManagingCursor(todoCursor);
+            todoCursor.moveToFirst();
+        }
+        return todoCursor;
+    }
+
+    private void updateSongList() {
+        if(todoCursor != null && todoCursor.moveToFirst()) {
+            do {
+                long id = todoCursor.getLong(DbAdapter.SONGID_COLUMN);
+                String title = todoCursor.getString(DbAdapter.TITLE_COLUMN);
+                String author = todoCursor.getString(DbAdapter.AUTHOR_COLUMN);
+                String cover = todoCursor.getString(DbAdapter.ALBUMPATH_COLUMN);
+
+                tasks.add(new Song(id,title,author,cover));
+            } while(todoCursor.moveToNext());
+        }
+    }
 
     @Override
     protected void onPause(){

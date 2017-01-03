@@ -75,7 +75,7 @@ public class SongAdapter extends BaseAdapter {
 
             Bitmap myBitmap = BitmapFactory.decodeFile(currSong.getAlbumid());
 
-            coverView.setImageBitmap(myBitmap);
+           coverView.setImageBitmap(myBitmap);
 
         }
 
@@ -103,9 +103,4 @@ public class SongAdapter extends BaseAdapter {
         albumCursor.close();
         return result;
     }
-
-
-
-
-
 }

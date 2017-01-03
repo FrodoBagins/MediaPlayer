@@ -185,12 +185,10 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         stopForeground(true);
     }
 
-
     public void setShuffle(){
         if(shuffle) shuffle=false;
         else shuffle=true;
     }
-
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
