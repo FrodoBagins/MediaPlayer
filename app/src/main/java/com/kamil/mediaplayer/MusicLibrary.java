@@ -3,6 +3,7 @@ package com.kamil.mediaplayer;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ public class MusicLibrary extends Activity {
 
     private TextView txtView;
 
+    private SQLiteDatabase db;
     private DbAdapter adapterrr;
     private Cursor songCursor;
     private List<SongModel> songs;
@@ -25,7 +27,7 @@ public class MusicLibrary extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_library);
-        initListView();
+     //   initListView();
 
         txtView = (TextView) findViewById(R.id.libraryTextView);
     }
@@ -92,6 +94,11 @@ public class MusicLibrary extends Activity {
 
     public void getSongList() {
 
+        getApplicationContext().deleteDatabase("database.db");
+
+     //   db.execSQL("DROP TABLE IF EXISTS "+ todo);
+
+        initListView();
         ContentResolver musicResolver = getContentResolver();
         Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
@@ -124,6 +131,8 @@ public class MusicLibrary extends Activity {
                 long thisAlbumId = musicCursor.getLong(albumID);
 
                 String cover = SongAdapter.getCoverArtPath(thisAlbumId,this);
+
+
 
                 adapterrr.insertSong(thisTitle,thisArtist,thisAlbum,cover,thisLength,thisId);
 

@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 /**
  * Created by Kamil_2 on 2016-12-17.
  */
@@ -71,11 +73,14 @@ public class SongAdapter extends BaseAdapter {
       // String cover = getCoverArtPath(currSong.getID(),convertView.getContext());
 
 
+
+          Context context = coverView.getContext();
+
+        String path = currSong.getAlbumid();
+
         if(!(currSong.getAlbumid()==null)){
 
-            Bitmap myBitmap = BitmapFactory.decodeFile(currSong.getAlbumid());
-
-           coverView.setImageBitmap(myBitmap);
+            Picasso.with(context).load(new File(path)).resize(100,100).placeholder(R.drawable.note).into(coverView);
 
         }
 
