@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.Button;
 import android.widget.ListView;
 import android.os.IBinder;
 import android.content.ComponentName;
@@ -32,17 +33,17 @@ import android.view.View;
 import com.kamil.mediaplayer.MusicService.MusicBinder;
 import android.widget.MediaController.MediaPlayerControl;
 
-public class MainActivity extends AppCompatActivity implements MediaPlayerControl{
+public class PlaylistActivity extends AppCompatActivity implements MediaPlayerControl{
 
     public final static String SONG_NUMBER = "NUMBER";
 
 
-    private DbAdapter todoDbAdapter;
-
+    private DbPlaylistAdapter todoDbAdapter;
 
     private Cursor todoCursor;
     private SongAdapter listAdapter;
     private ArrayList<Song> tasks;
+
 
     private ArrayList<Song> songList;
     private ListView songView;
@@ -53,35 +54,26 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
     private boolean paused=false, playbackPaused=false;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_playlist);
 
-
-        songView = (ListView)findViewById(R.id.song_list);
+        songView = (ListView)findViewById(R.id.song_list2);
         songList = new ArrayList<Song>();
-
 
         getSongList();
 
         Collections.sort(tasks, new Comparator<Song>(){
             public int compare(Song a, Song b){
                 return a.getTitle().compareTo(b.getTitle());
-           }
+            }
         });
 
         SongAdapter songAdt = new SongAdapter(this, tasks);
         songView.setAdapter(songAdt);
         setController();
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -109,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
         });
 
         controller.setMediaPlayer(this);
-        controller.setAnchorView(findViewById(R.id.song_list));
+        controller.setAnchorView(findViewById(R.id.song_list2));
         controller.setEnabled(true);
 
     }
@@ -132,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
             playbackPaused=false;
         }
         controller.show(0);
-}
+    }
 
     public void songPicked(View view){
         musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
@@ -144,17 +136,15 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
         }
         controller.show(0);
 
-        Intent intent = new Intent(this, PlayingSong.class);
+      //  Intent intent = new Intent(this, PlayingSong.class);
 
+      //  int ooomg = Integer.parseInt(view.getTag().toString());
 
-        int ooomg = Integer.parseInt(view.getTag().toString());
+      //  Song sonk = tasks.get(ooomg);
 
-        Song sonk = tasks.get(ooomg);
+      //  intent.putExtra(SONG_NUMBER, sonk.getSongId());
 
-        intent.putExtra(SONG_NUMBER, sonk.getSongId());
-
-
-        startActivity(intent);
+      //  startActivity(intent);
     }
 
     @Override
@@ -221,12 +211,11 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
 
     private void initListView() {
         fillListViewData();
-        //initListViewONItemClick();
 
     }
 
     private void fillListViewData() {
-        todoDbAdapter = new DbAdapter(getApplicationContext());
+        todoDbAdapter = new DbPlaylistAdapter(getApplicationContext());
         todoDbAdapter.open();
 
 
@@ -256,11 +245,11 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
     private void updateSongList() {
         if(todoCursor != null && todoCursor.moveToFirst()) {
             do {
-                long id = todoCursor.getLong(DbAdapter.SONGID_COLUMN);
-                String title = todoCursor.getString(DbAdapter.TITLE_COLUMN);
-                String author = todoCursor.getString(DbAdapter.AUTHOR_COLUMN);
-                String cover = todoCursor.getString(DbAdapter.ALBUMPATH_COLUMN);
-                int songid = todoCursor.getInt(DbAdapter.ID_COLUMN);
+                long id = todoCursor.getLong(DbPlaylistAdapter.SONGID_COLUMN);
+                String title = todoCursor.getString(DbPlaylistAdapter.TITLE_COLUMN);
+                String author = todoCursor.getString(DbPlaylistAdapter.AUTHOR_COLUMN);
+                String cover = todoCursor.getString(DbPlaylistAdapter.ALBUMPATH_COLUMN);
+                int songid = todoCursor.getInt(DbPlaylistAdapter.ID_COLUMN);
 
                 tasks.add(new Song(id,title,author,cover,songid));
             } while(todoCursor.moveToNext());
@@ -302,14 +291,14 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
     @Override
     public int getDuration() {
         if(musicSrv!=null && musicBound && musicSrv.isPng())
-        return musicSrv.getDur();
+            return musicSrv.getDur();
         else return 0;
     }
 
     @Override
     public int getCurrentPosition() {
         if(musicSrv!=null && musicBound && musicSrv.isPng())
-        return musicSrv.getPosn();
+            return musicSrv.getPosn();
         else return 0;
     }
 
@@ -321,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
     @Override
     public boolean isPlaying() {
         if(musicSrv!=null && musicBound)
-        return musicSrv.isPng();
+            return musicSrv.isPng();
         return false;
     }
 

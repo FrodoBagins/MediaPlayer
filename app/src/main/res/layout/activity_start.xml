@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.kamil.mediaplayer.StartActivity">
 
     <Button
@@ -30,6 +31,28 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:onClick="viewLibrary"
         android:layout_below="@+id/all_song_view"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Resetuj playliste"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/playlistreset"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:onClick="resetPlayList"
+        android:layout_below="@+id/playlist"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="PLAYLISTA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/playlist"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:onClick="viewPlaylist"
+        android:layout_below="@+id/library"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 </RelativeLayout>

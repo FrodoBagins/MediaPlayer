@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_playing_song"
+    tools:context="com.kamil.mediaplayer.PlayingSong"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+        <ImageView android:layout_width="match_parent"
+            android:src="@drawable/note"
+            android:id="@+id/album_cover"
+            android:layout_height="250dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/artist_label"
+            android:paddingTop="5dp"
+            android:gravity="center"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/album_label"
+            android:paddingTop="5dp"
+            android:gravity="center"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/song_label"
+            android:paddingTop="5dp"
+            android:gravity="center"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+        <Button
+            android:text="Dodaj do playlisty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addplaylist" />
+
+        <Button
+            android:text="Powrót do listy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/returnbutton" />
+
+
+</LinearLayout>
+
+

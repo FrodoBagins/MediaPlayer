@@ -49,8 +49,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         rand=new Random();
         initMusicPlayer();
 
-
-
     }
 
     public void initMusicPlayer(){

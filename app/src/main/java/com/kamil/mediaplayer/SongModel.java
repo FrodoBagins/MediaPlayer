@@ -4,7 +4,6 @@ package com.kamil.mediaplayer;
  * Created by Kamil_2 on 2017-01-03.
  */
 
-
 public class SongModel {
 
     private long id;

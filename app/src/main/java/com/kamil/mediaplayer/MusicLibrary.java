@@ -2,13 +2,18 @@ package com.kamil.mediaplayer;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,7 +21,10 @@ import java.util.List;
 
 public class MusicLibrary extends Activity {
 
-    private TextView txtView;
+    public TextView txtView;
+   public ProgressBar progBar;
+
+    public Button returnbutton;
 
     private SQLiteDatabase db;
     private DbAdapter adapterrr;
@@ -27,32 +35,39 @@ public class MusicLibrary extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_library);
-     //   initListView();
 
+        progBar = (ProgressBar) findViewById(R.id.progressBar);
         txtView = (TextView) findViewById(R.id.libraryTextView);
-    }
+        returnbutton = (Button) findViewById(R.id.library_return);
 
+        returnbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+    }
 
     public void createLibrary(View view){
 
-        txtView.setText("OOOOOOO");
-
+        progBar.setVisibility(View.VISIBLE);
         getSongList();
-      //  adapterrr.insertSong("Titul","AUthor","Sdasd","sdfsdfdsf",234234234,324234234);
-
     }
 
 
     private void initListView() {
         begin();
-
     }
 
     private void begin(){
         adapterrr = new DbAdapter(getApplicationContext());
         adapterrr.open();
         getAllSongs();
-
     }
 
     private void getAllSongs() {
@@ -96,8 +111,6 @@ public class MusicLibrary extends Activity {
 
         getApplicationContext().deleteDatabase("database.db");
 
-     //   db.execSQL("DROP TABLE IF EXISTS "+ todo);
-
         initListView();
         ContentResolver musicResolver = getContentResolver();
         Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
@@ -132,14 +145,15 @@ public class MusicLibrary extends Activity {
 
                 String cover = SongAdapter.getCoverArtPath(thisAlbumId,this);
 
-
-
                 adapterrr.insertSong(thisTitle,thisArtist,thisAlbum,cover,thisLength,thisId);
 
             }
             while (musicCursor.moveToNext());
         }
-        txtView.setText("Tworzenie biblioteki zakonczone");
+       txtView.setText("Odświeżanie biblioteki zakonczone");
+     //   progBar.setVisibility(View.INVISIBLE);
     }
+
+
 
 }

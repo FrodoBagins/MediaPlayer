@@ -3,4 +3,5 @@
     <string name="desc">1</string>
     <string name="all_song">Lista utworów</string>
     <string name="library">Biblioteka</string>
+    <string name="title_activity_playlist">PlaylistActivity</string>
 </resources>

@@ -68,11 +68,6 @@ public class SongAdapter extends BaseAdapter {
         ImageView coverView = (ImageView)songLay.findViewById(R.id.imageView);
         //get song using position
         Song currSong = songs.get(position);
-        //get title and artist strings
-
-      // String cover = getCoverArtPath(currSong.getID(),convertView.getContext());
-
-
 
           Context context = coverView.getContext();
 
@@ -87,7 +82,6 @@ public class SongAdapter extends BaseAdapter {
 
         songView.setText(currSong.getTitle());
         artistView.setText(currSong.getArtist());
-        //set position as tag
         songLay.setTag(position);
         return songLay;
     }
