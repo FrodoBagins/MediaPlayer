@@ -22,7 +22,7 @@ import java.util.List;
 public class MusicLibrary extends Activity {
 
     public TextView txtView;
-   public ProgressBar progBar;
+    public ProgressBar progBar;
 
     public Button returnbutton;
 
@@ -43,14 +43,10 @@ public class MusicLibrary extends Activity {
         returnbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getApplicationContext(), StartActivity.class);
                 startActivity(intent);
-
             }
         });
-
-
     }
 
     public void createLibrary(View view){
@@ -150,10 +146,7 @@ public class MusicLibrary extends Activity {
             }
             while (musicCursor.moveToNext());
         }
-       txtView.setText("Odświeżanie biblioteki zakonczone");
-     //   progBar.setVisibility(View.INVISIBLE);
+       txtView.setText(getString(R.string.library_refresh_finish));
+
     }
-
-
-
 }

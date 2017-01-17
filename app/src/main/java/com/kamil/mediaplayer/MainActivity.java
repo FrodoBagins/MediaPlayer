@@ -3,6 +3,10 @@ package com.kamil.mediaplayer;
 import android.content.ContentUris;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -31,11 +35,16 @@ import android.view.MenuItem;
 import android.view.View;
 import com.kamil.mediaplayer.MusicService.MusicBinder;
 import android.widget.MediaController.MediaPlayerControl;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements MediaPlayerControl{
+public class MainActivity extends AppCompatActivity implements MediaPlayerControl ,SensorEventListener {
 
     public final static String SONG_NUMBER = "NUMBER";
 
+    Sensor proximity;
+    SensorManager sm;
+
+    int licznik=2000;
 
     private DbAdapter todoDbAdapter;
 
@@ -76,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
         songView.setAdapter(songAdt);
         setController();
 
+
+
+
     }
 
     @Override
@@ -92,6 +104,13 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
             bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
             startService(playIntent);
         }
+
+        sm=(SensorManager)getSystemService(SENSOR_SERVICE);
+
+        proximity =sm.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+
+        sm.registerListener(this, proximity, SensorManager.SENSOR_DELAY_NORMAL);
+
     }
 
     private void setController(){
@@ -176,6 +195,22 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
                 startActivity(intent);
 
                 break;
+            case R.id.action_nohand:
+
+                if(licznik < 2000)
+                {
+                    licznik = 2000;
+                    Toast.makeText(MainActivity.this, getString(R.string.proximity_off),
+                            Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    licznik=1;
+                    Toast.makeText(MainActivity.this, getString(R.string.proximity_on),
+                            Toast.LENGTH_LONG).show();
+                }
+
+                break;
             case R.id.action_end:
                 stopService(playIntent);
                 musicSrv=null;
@@ -221,7 +256,6 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
 
     private void initListView() {
         fillListViewData();
-        //initListViewONItemClick();
 
     }
 
@@ -348,5 +382,28 @@ public class MainActivity extends AppCompatActivity implements MediaPlayerContro
     @Override
     public int getAudioSessionId() {
         return 0;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+
+
+        if(licznik<1000) {
+            licznik++;
+            if (licznik % 4 == 1) {
+                this.playNext();
+            }
+
+            if (licznik % 4 == 3) {
+                this.pause();
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 }

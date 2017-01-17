@@ -37,7 +37,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     private Random rand;
 
 
-
     public void onCreate(){
         //create the service
         super.onCreate();
@@ -200,14 +199,12 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         Notification.Builder builder = new Notification.Builder(this);
 
         builder.setContentIntent(pendInt)
-                .setSmallIcon(R.drawable.play)
+                .setSmallIcon(R.mipmap.play)
                 .setTicker(songTitle)
                 .setOngoing(true)
-                .setContentTitle("Playing")
+                .setContentTitle(getString(R.string.playing))
         .setContentText(songTitle);
         Notification not = builder.build();
-
         startForeground(NOTIFY_ID, not);
-
     }
 }

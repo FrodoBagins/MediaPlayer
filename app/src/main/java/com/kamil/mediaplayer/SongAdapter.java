@@ -69,16 +69,13 @@ public class SongAdapter extends BaseAdapter {
         //get song using position
         Song currSong = songs.get(position);
 
-          Context context = coverView.getContext();
+        Context context = coverView.getContext();
 
         String path = currSong.getAlbumid();
 
         if(!(currSong.getAlbumid()==null)){
-
             Picasso.with(context).load(new File(path)).resize(100,100).placeholder(R.drawable.note).into(coverView);
-
         }
-
 
         songView.setText(currSong.getTitle());
         artistView.setText(currSong.getArtist());

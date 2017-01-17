@@ -40,8 +40,6 @@ public class PlayingSong extends AppCompatActivity {
         todoDbAdapter2 = new DbAdapter(getApplicationContext());
         todoDbAdapter2.open();
 
-
-
         final SongModel song = todoDbAdapter2.getSong(songid);
 
         author = (TextView) findViewById(R.id.artist_label);
@@ -55,9 +53,7 @@ public class PlayingSong extends AppCompatActivity {
             public void onClick(View v) {
                 todoDbAdapter = new DbPlaylistAdapter(getApplicationContext());
                 todoDbAdapter.open();
-
                 todoDbAdapter.insertSong(song.getTitle(),song.getAuthor(),song.getAlbum(),song.getAlbumpath(),song.getLength(),song.getSongid());
-
                 todoDbAdapter.close();
 
             }

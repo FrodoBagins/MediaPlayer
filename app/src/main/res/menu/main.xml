@@ -3,25 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_nohand"
+        android:icon="@mipmap/hand"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        android:title="End"/>
+
+    <item
         android:id="@+id/action_shuffle"
         android:icon="@mipmap/shuffle"
-        android:orderInCategory="1"
+        android:orderInCategory="2"
         app:showAsAction="always"
         android:title="Shuffle"/>
 
     <item
         android:id="@+id/action_end"
-        android:icon="@drawable/end"
-        android:orderInCategory="2"
+        android:icon="@mipmap/turnoff"
+        android:orderInCategory="3"
         app:showAsAction="always"
         android:title="End"/>
 
     <item
         android:id="@+id/action_return"
-        android:icon="@drawable/end"
-        android:orderInCategory="2"
+        android:icon="@mipmap/menu"
+        android:orderInCategory="4"
         app:showAsAction="always"
         android:title="End"/>
-
 
 </menu>

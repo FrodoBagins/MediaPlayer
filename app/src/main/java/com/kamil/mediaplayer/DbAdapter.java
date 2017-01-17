@@ -151,9 +151,7 @@ public class DbAdapter {
 
             super(context, name, factory, version);
 
-
         }
-
 
         @Override
         public void onCreate(SQLiteDatabase db) {
@@ -168,11 +166,6 @@ public class DbAdapter {
             onCreate(db);
         }
     }
-
-
-
-
-
 
 }
 

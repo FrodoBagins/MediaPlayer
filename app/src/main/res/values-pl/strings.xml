@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MediaPlayer</string>
+    <string name="all_song">Lista utworów</string>
+    <string name="back_menu">Powrót do menu</string>
+    <string name="before_refresh">Odświeżanie biblioteki</string>
+    <string name="desc">1</string>
+    <string name="library">Biblioteka</string>
+    <string name="library_refresh_finish">Odświeżanie biblioteki zakończone</string>
+    <string name="playing">Odtwarzanie</string>
+    <string name="playlist">PLAYLISTA</string>
+    <string name="proximity_off">Wykrycie ruchu wyłączone</string>
+    <string name="proximity_on">Wykrycie ruchu włączone</string>
+    <string name="refresh_lib">Odśwież bibliotekę</string>
+    <string name="reset_playlist">Resetuj playliste</string>
+    <string name="title_activity_playlist">PlaylistActivity</string>
+    <string name="add_to_playlist">Dodaj do playlisty</string>
+    <string name="back_to_list">Powrót do listy</string>
+</resources>

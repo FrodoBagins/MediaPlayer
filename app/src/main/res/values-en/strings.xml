@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MediaPlayer</string>
+    <string name="back_menu">Back to Menu</string>
+    <string name="before_refresh">Library refreshing</string>
+    <string name="desc">1</string>
+    <string name="library">Library</string>
+    <string name="library_refresh_finish">Library refreshing finished</string>
+    <string name="playing">Playing</string>
+    <string name="playlist">PLAYLIST</string>
+    <string name="proximity_off">Proximity sensor off</string>
+    <string name="proximity_on">Proximity sensor on</string>
+    <string name="refresh_lib">Refresh library</string>
+    <string name="reset_playlist">Reset playlist</string>
+    <string name="title_activity_playlist">PlaylistActivity</string>
+    <string name="all_song">Track list</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="back_to_list">Back to track list</string>
+</resources>

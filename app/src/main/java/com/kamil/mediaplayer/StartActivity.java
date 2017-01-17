@@ -18,7 +18,6 @@ public class StartActivity extends AppCompatActivity {
     public void viewAllSong(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-
     }
 
     public void viewPlaylist(View view) {
@@ -31,7 +30,6 @@ public class StartActivity extends AppCompatActivity {
         adapter = new DbPlaylistAdapter(getApplicationContext());
         adapter.open();
         adapter.close();
-
     }
 
     public void viewLibrary(View view) {
